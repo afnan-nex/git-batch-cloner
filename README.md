@@ -68,4 +68,4 @@ Ctrl + C
 ```
 ## **License**
 
-This project is licensed under the MIT License. See the [LICENSE](https://grok.com/chat/LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](https://github.com/afnan-nex/git-batch-cloner/blob/main/LICENSE) file for details.
