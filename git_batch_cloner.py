@@ -2,13 +2,15 @@
 GitHub Repository Cloner
 
 A production-quality Python tool to clone all repositories from a GitHub user.
-Supports pagination, rate limit handling, resume capability, and private repositories.
+Supports pagination, rate limit handling, overwrite capability, and private repositories.
 """
 
 import os
 import re
 import sys
 import time
+import shutil
+import argparse
 import subprocess
 from typing import List, Dict, Any, Optional
 
@@ -98,8 +100,15 @@ def fetch_repositories(username: str, token: Optional[str]) -> List[Dict[str, An
     return repos
 
 
-def clone_repository(repo: Dict[str, Any], target_dir: str, token: Optional[str]) -> str:
-    """Clones a single repository. Returns 'success', 'skipped', or 'failed'."""
+def remove_readonly(func, path, _):
+    """Error handler for shutil.rmtree to handle read-only git files (especially on Windows)."""
+    import stat
+    os.chmod(path, stat.S_IWRITE)
+    func(path)
+
+
+def clone_repository(repo: Dict[str, Any], target_dir: str, token: Optional[str], overwrite: bool = False) -> str:
+    """Clones a single repository. Returns 'success', 'overwritten', 'skipped', or 'failed'."""
     repo_name = repo['name']
     clone_url = repo['clone_url']
     
@@ -108,10 +117,20 @@ def clone_repository(repo: Dict[str, Any], target_dir: str, token: Optional[str]
         clone_url = clone_url.replace('https://', f'https://{token}@')
         
     repo_path = os.path.join(target_dir, repo_name)
+    was_overwritten = False
     
-    # Skip if already exists (Resume support)
+    # Check if target folder already exists
     if os.path.exists(repo_path):
-        return 'skipped'
+        if overwrite:
+            try:
+                # Force remove existing directory (handles read-only .git files on Windows)
+                shutil.rmtree(repo_path, onerror=remove_readonly)
+                was_overwritten = True
+            except Exception as e:
+                print(f"  Error deleting existing directory: {str(e)}")
+                return 'failed'
+        else:
+            return 'skipped'
         
     env = os.environ.copy()
     # Prevent git from hanging on credential prompts if token is invalid/missing
@@ -128,9 +147,8 @@ def clone_repository(repo: Dict[str, Any], target_dir: str, token: Optional[str]
         )
         
         if result.returncode == 0:
-            return 'success'
+            return 'overwritten' if was_overwritten else 'success'
         else:
-            # Extract the most relevant error message from git output
             error_msg = result.stderr.strip().split('\n')[-1] if result.stderr else "Unknown error"
             print(f"  Error: {error_msg}")
             return 'failed'
@@ -153,10 +171,13 @@ def check_git_installed():
 def main():
     check_git_installed()
     
-    # Get user input from CLI arguments or interactive prompt
-    if len(sys.argv) > 1:
-        user_input = sys.argv[1]
-    else:
+    parser = argparse.ArgumentParser(description="Clone all public/private GitHub repositories for a user.")
+    parser.add_argument("username", nargs="?", help="GitHub username or profile URL")
+    parser.add_argument("--overwrite", action="store_true", help="Overwrite existing repository directories if they exist")
+    args = parser.parse_args()
+    
+    user_input = args.username
+    if not user_input:
         user_input = input("Enter GitHub username or profile URL: ").strip()
         
     if not user_input:
@@ -169,11 +190,23 @@ def main():
         print(f"Error: {e}")
         sys.exit(1)
         
+    overwrite_mode = args.overwrite
+    # Prompt user interactively for overwrite if --overwrite flag wasn't passed
+    if not overwrite_mode and len(sys.argv) <= 2:
+        confirm = input("Overwrite existing repositories if they exist? (y/N): ").strip().lower()
+        if confirm in ['y', 'yes']:
+            overwrite_mode = True
+
     token = get_github_token()
     if token:
         print("GitHub token detected. Private repositories will be included if accessible.")
     else:
         print("No GitHub token found. Only public repositories will be cloned.")
+        
+    if overwrite_mode:
+        print("Overwrite mode enabled. Existing repository folders will be deleted and re-cloned.\n")
+    else:
+        print("Overwrite mode disabled. Existing repository folders will be skipped.\n")
         
     print(f"Fetching repositories for user: {username}...")
     repos = fetch_repositories(username, token)
@@ -185,11 +218,11 @@ def main():
     total_repos = len(repos)
     print(f"Found {total_repos} repositories.\n")
     
-    # Create target directory in the user's standard Downloads folder
     target_dir = os.path.join(os.path.expanduser('~'), 'Downloads', username)
     os.makedirs(target_dir, exist_ok=True)
     
     completed = 0
+    overwritten = 0
     failed = 0
     skipped = 0
     
@@ -197,11 +230,14 @@ def main():
         repo_name = repo['name']
         print(f"[{i}/{total_repos}] Cloning {repo_name}...")
         
-        result = clone_repository(repo, target_dir, token)
+        result = clone_repository(repo, target_dir, token, overwrite=overwrite_mode)
         
         if result == 'success':
             print("✓ Success\n")
             completed += 1
+        elif result == 'overwritten':
+            print("✓ Overwritten & Cloned\n")
+            overwritten += 1
         elif result == 'skipped':
             print("↷ Skipped (already exists)\n")
             skipped += 1
@@ -212,7 +248,8 @@ def main():
     print("-" * 30)
     print("Summary:")
     print(f"Total repositories: {total_repos}")
-    print(f"Completed: {completed}")
+    print(f"New Clones: {completed}")
+    print(f"Overwritten: {overwritten}")
     print(f"Skipped: {skipped}")
     print(f"Failed: {failed}")
     print("-" * 30)
