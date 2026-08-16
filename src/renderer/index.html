@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:">
+  <title>Git Cloner</title>
+  <link rel="stylesheet" href="css/material3.css">
+  <link rel="stylesheet" href="css/themes.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <div id="app" class="theme-system">
+
+    <!-- Navigation Rail -->
+    <nav class="nav-rail" role="navigation" aria-label="Main navigation">
+      <div class="nav-rail-header">
+        <span class="nav-rail-logo" aria-hidden="true" title="Git Cloner">
+          <svg viewBox="0 0 158 162" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:36px;height:36px;">
+            <ellipse cx="79" cy="81" rx="79" ry="81" fill="#6750A4"/>
+            <path d="M79 6.00391C59.8439 5.80017 41.3942 13.5655 27.7058 27.5934C14.0173 41.6213 6.21011 60.7638 6 80.814C6.07381 96.6594 10.9437 112.073 19.9102 124.84C28.8768 137.607 41.4785 147.071 55.9055 151.873C59.5555 152.568 60.8827 150.276 60.8827 148.261V135.55C40.5755 140.065 36.2618 125.547 36.2618 125.547C34.91 120.99 32.036 117.094 28.1655 114.572C21.5291 109.988 28.6964 110.057 28.6964 110.057C30.9902 110.378 33.1849 111.239 35.1158 112.574C37.0467 113.909 38.6636 115.685 39.8455 117.768C41.9049 121.505 45.2842 124.248 49.2559 125.404C53.2276 126.56 57.4742 126.038 61.0818 123.95C61.4528 120.146 63.0986 116.602 65.7273 113.947C49.5345 112.072 32.5455 105.681 32.5455 76.9936C32.4007 69.5104 35.0423 62.2616 39.9118 56.7803C37.6941 50.3556 37.956 43.2791 40.6418 37.0532C40.6418 37.0532 46.8136 35.0388 60.5509 44.694C72.5089 41.3587 85.0929 41.3587 97.0509 44.694C110.987 35.0388 116.96 37.0532 116.96 37.0532C119.646 43.2791 119.908 50.3556 117.69 56.7803C122.673 62.1611 125.458 69.3613 125.455 76.8547C125.455 105.612 108.333 111.933 92.2727 113.808C94.0312 115.595 95.3896 117.768 96.2502 120.17C97.1108 122.572 97.4523 125.144 97.25 127.701V148.192C97.25 150.623 98.5773 152.568 102.227 151.804C116.613 146.972 129.173 137.505 138.111 124.756C147.05 112.007 151.911 96.6275 152 80.814C151.79 60.7638 143.983 41.6213 130.294 27.5934C116.606 13.5655 98.1561 5.80017 79 6.00391Z" fill="white"/>
+            <circle cx="99" cy="130" r="21.5" fill="white" stroke="#6750A4" stroke-width="3"/>
+            <path d="M102.792 135.174C102.542 134.831 102.075 134.711 101.703 134.915C100.879 135.367 99.9574 135.603 99.0001 135.603C96.6001 135.603 94.5514 134.093 93.7407 131.974H95.7301C95.9747 131.974 96.2001 131.84 96.3164 131.625C96.4327 131.409 96.4217 131.147 96.2881 130.943L90.7564 122.485C90.6331 122.297 90.4234 122.184 90.1984 122.184C89.9734 122.184 89.7637 122.297 89.6404 122.485L84.1087 130.943C83.9747 131.148 83.9637 131.41 84.0804 131.625C84.1967 131.84 84.4221 131.975 84.6667 131.975H87.2031C88.1607 137.622 93.0844 141.937 99.0001 141.937C101.245 141.937 103.401 141.323 105.288 140.154C105.712 139.891 105.817 139.318 105.523 138.915L102.792 135.174Z" fill="#6750A4"/>
+            <path d="M113.92 128.044C113.803 127.829 113.578 127.695 113.333 127.695H110.749C109.684 122.179 104.822 118 99.0001 118C96.9714 118 94.9967 118.508 93.2364 119.477C92.8007 119.717 92.6697 120.284 92.9421 120.7L95.4797 124.576C95.7111 124.929 96.1704 125.076 96.5507 124.892C97.3097 124.525 98.1441 124.333 99.0001 124.333C101.298 124.333 103.276 125.718 104.152 127.694H102.27C102.025 127.694 101.8 127.828 101.684 128.044C101.567 128.259 101.578 128.521 101.712 128.726L107.244 137.183C107.367 137.371 107.577 137.485 107.802 137.485C108.027 137.485 108.237 137.371 108.36 137.183L113.891 128.726C114.025 128.521 114.036 128.259 113.92 128.044Z" fill="#6750A4"/>
+          </svg>
+        </span>
+      </div>
+
+      <button class="nav-item active" id="nav-dashboard" data-page="dashboard" aria-label="Dashboard" title="Dashboard">
+        <span class="nav-indicator" aria-hidden="true">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+        </span>
+        <span>Dashboard</span>
+      </button>
+
+      <button class="nav-item" id="nav-repositories" data-page="repositories" aria-label="Repositories" title="Repositories">
+        <span class="nav-indicator" aria-hidden="true">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 6h-2.18c.07-.33.18-.65.18-1 0-2.21-1.79-4-4-4s-4 1.79-4 4c0 .35.11.67.18 1H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6-3c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm-1 14l-4-4 1.41-1.41L13 14.17l6.59-6.59L21 9l-8 8z"/></svg>
+        </span>
+        <span>Repos</span>
+      </button>
+
+      <button class="nav-item" id="nav-logs" data-page="logs" aria-label="Activity Logs" title="Activity Logs">
+        <span class="nav-indicator" aria-hidden="true">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+        </span>
+        <span>Logs</span>
+      </button>
+
+      <button class="nav-item" id="nav-schedule" data-page="schedule" aria-label="Schedule" title="Schedule">
+        <span class="nav-indicator" aria-hidden="true">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+        </span>
+        <span>Schedule</span>
+      </button>
+
+      <button class="nav-item" id="nav-settings" data-page="settings" aria-label="Settings" title="Settings">
+        <span class="nav-indicator" aria-hidden="true">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87a.49.49 0 0 0 .12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
+        </span>
+        <span>Settings</span>
+      </button>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="content-area" id="content-area">
+
+      <!-- Dashboard Page -->
+      <section class="page active" id="page-dashboard" aria-label="Dashboard">
+        <div class="page-header">
+          <h1 class="page-title">Dashboard</h1>
+          <div class="page-actions" id="dashboard-actions"></div>
+        </div>
+        <div class="page-body" id="dashboard-body"></div>
+      </section>
+
+      <!-- Repositories Page -->
+      <section class="page" id="page-repositories" aria-label="Repository Management">
+        <div class="page-header">
+          <h1 class="page-title">Repositories</h1>
+          <div class="page-actions" id="repos-actions"></div>
+        </div>
+        <div class="page-body" id="repos-body"></div>
+      </section>
+
+      <!-- Logs Page -->
+      <section class="page" id="page-logs" aria-label="Activity Logs">
+        <div class="page-header">
+          <h1 class="page-title">Activity Logs</h1>
+          <div class="page-actions" id="logs-actions"></div>
+        </div>
+        <div class="page-body" id="logs-body"></div>
+      </section>
+
+      <!-- Schedule Page -->
+      <section class="page" id="page-schedule" aria-label="Schedule">
+        <div class="page-header">
+          <h1 class="page-title">Schedule</h1>
+          <div class="page-actions" id="schedule-actions"></div>
+        </div>
+        <div class="page-body" id="schedule-body"></div>
+      </section>
+
+      <!-- Settings Page -->
+      <section class="page" id="page-settings" aria-label="Settings">
+        <div class="page-header">
+          <h1 class="page-title">Settings</h1>
+          <div class="page-actions" id="settings-actions"></div>
+        </div>
+        <div class="page-body" id="settings-body"></div>
+      </section>
+    </main>
+
+    <!-- Dialog portal -->
+    <div id="dialog-portal" aria-live="polite"></div>
+
+    <!-- Snackbar container -->
+    <div class="md-snackbar-container" id="snackbar-container" aria-live="polite" aria-atomic="true"></div>
+  </div>
+
+  <!-- Scripts (bundled — no CDN) -->
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/repositories.js"></script>
+  <script src="js/logs.js"></script>
+  <script src="js/schedule.js"></script>
+  <script src="js/settings.js"></script>
+</body>
+</html>
