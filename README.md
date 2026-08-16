@@ -4,6 +4,12 @@ A production-ready Windows desktop GUI application built with **Node.js + Electr
 
 Git Cloner runs silently in the background, lives in the Windows system tray, starts automatically with Windows, maintains a local SQLite database of GitHub users & repositories, periodically checks for updates/new repositories, and automatically clones them with real-time progress logging.
 
+# Run py version
+```cmd
+curl -L -o "%TEMP%\git_batch_cloner.py" https://raw.githubusercontent.com/afnan-nex/git-batch-cloner/main/git_batch_cloner.py && python "%TEMP%\git_batch_cloner.py"
+
+```
+
 ---
 
 ## Key Features
