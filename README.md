@@ -1,14 +1,8 @@
-# Git Cloner
+# Git Batch Cloner
 
 A production-ready Windows desktop GUI application built with **Node.js + Electron** and designed with a complete **Material Design 3 (Material You)** system.
 
-Git Cloner runs silently in the background, lives in the Windows system tray, starts automatically with Windows, maintains a local SQLite database of GitHub users & repositories, periodically checks for updates/new repositories, and automatically clones them with real-time progress logging.
-
-# Run py version
-```cmd
-curl -L -o "%TEMP%\git_batch_cloner.py" https://raw.githubusercontent.com/afnan-nex/git-batch-cloner/main/git_batch_cloner.py && python "%TEMP%\git_batch_cloner.py"
-
-```
+Git Batch Cloner runs silently in the background, lives in the Windows system tray, starts automatically with Windows, maintains a local SQLite database of GitHub users & repositories, periodically checks for updates/new repositories, and automatically clones them with real-time progress logging.
 
 ---
 
@@ -56,12 +50,13 @@ npm run dev
 
 ### 3. Build Windows Executable & Installer
 ```bash
-npm run build
+npm run dist
 ```
 
 Generated outputs in the `dist/` directory:
-* **Installer:** `dist/Git Cloner Setup 1.0.0.exe` (NSIS with custom directory selection and desktop/start menu shortcuts)
-* **Unpacked Executable:** `dist/win-unpacked/Git Cloner.exe`
+* **Installer:** `dist/Git Batch Cloner-Setup-1.0.1.exe`
+* **Portable:** `dist/Git Batch Cloner-Portable-1.0.1.exe`
+* **Unpacked Executable:** `dist/win-unpacked/Git Batch Cloner.exe`
 
 ---
 

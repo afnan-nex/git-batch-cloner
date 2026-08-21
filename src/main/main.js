@@ -42,7 +42,7 @@ function createMainWindow() {
       preload: path.join(__dirname, '..', 'renderer', 'preload.js'),
       sandbox: false // Required for preload with contextBridge
     },
-    title: 'Git Cloner'
+    title: 'Git Batch Cloner'
   });
 
   mainWindow.setMenuBarVisibility(false);

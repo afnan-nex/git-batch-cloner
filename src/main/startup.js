@@ -10,12 +10,12 @@ function setStartWithWindows(enabled) {
   app.setLoginItemSettings({
     openAtLogin: enabled,
     openAsHidden: true,
-    name: 'Git Cloner'
+    name: 'Git Batch Cloner'
   });
 }
 
 function getStartWithWindows() {
-  const settings = app.getLoginItemSettings({ name: 'GitHub Auto Cloner' });
+  const settings = app.getLoginItemSettings({ name: 'Git Batch Cloner' });
   return settings.openAtLogin;
 }
 

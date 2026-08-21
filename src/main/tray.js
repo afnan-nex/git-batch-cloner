@@ -24,7 +24,7 @@ function createTray(app, showWindow, onCloneNow, onScheduleAt, onExit) {
   }
 
   _tray = new Tray(icon);
-  _tray.setToolTip('Git Cloner');
+  _tray.setToolTip('Git Batch Cloner');
 
   updateContextMenu(_tray, showWindow, onCloneNow, onScheduleAt, onExit);
 

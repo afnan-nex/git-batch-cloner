@@ -17,7 +17,7 @@ function showCloneSummary(summary) {
 
   try {
     const n = new Notification({
-      title: 'Git Cloner',
+      title: 'Git Batch Cloner',
       body: `Repository check completed.\n${parts.join(' · ')}`
     });
     n.show();
@@ -29,7 +29,7 @@ function showCloneSummary(summary) {
 function showError(message) {
   try {
     const n = new Notification({
-      title: 'Git Cloner — Error',
+      title: 'Git Batch Cloner — Error',
       body: message
     });
     n.show();

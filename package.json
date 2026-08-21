@@ -1,13 +1,19 @@
 {
-  "name": "git-cloner",
-  "version": "1.0.0",
+  "name": "git-batch-cloner",
+  "version": "1.0.1",
   "description": "Automatically clone GitHub repositories on a schedule — Material 3 desktop app",
   "main": "src/main/main.js",
-  "author": "GitHub Auto Cloner",
+  "author": {
+    "name": "AFNAN",
+    "email": "gitbatchcloner@app.local"
+  },
   "license": "MIT",
   "scripts": {
     "dev": "electron .",
-    "build": "electron-builder --win"
+    "build": "electron-builder --win",
+    "build:win": "electron-builder --win --x64",
+    "build:portable": "electron-builder --win portable",
+    "dist": "electron-builder --win nsis portable"
   },
   "dependencies": {
     "@fontsource/roboto": "^5.3.0",
@@ -20,8 +26,9 @@
     "png-to-ico": "^3.0.2"
   },
   "build": {
-    "appId": "com.git-cloner.app",
-    "productName": "Git Cloner",
+    "appId": "com.gitbatchcloner.app",
+    "productName": "Git Batch Cloner",
+    "copyright": "Copyright © 2026 AFNAN",
     "directories": {
       "output": "dist"
     },
@@ -41,19 +48,42 @@
       }
     ],
     "win": {
-      "target": "nsis",
-      "icon": "assets/icons/app.ico"
+      "publisherName": "AFNAN",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icons/app.ico",
+      "requestedExecutionLevel": "asInvoker"
     },
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
       "createStartMenuShortcut": true,
-      "shortcutName": "Git Cloner",
+      "shortcutName": "Git Batch Cloner",
       "include": "build/installer.nsh",
       "runAfterFinish": true,
       "installerIcon": "assets/icons/app.ico",
-      "uninstallerIcon": "assets/icons/app.ico"
-    }
+      "uninstallerIcon": "assets/icons/app.ico",
+      "installerLanguages": [
+        "en_US"
+      ],
+      "language": "1033"
+    },
+    "portable": {
+      "artifactName": "Git Batch Cloner-Portable-${version}.exe"
+    },
+    "artifactName": "${productName}-Setup-${version}.exe"
   }
 }

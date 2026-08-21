@@ -77,7 +77,7 @@ function scheduleJobTimer(sendToRenderer) {
       markScheduledJobDone(job.id);
       try {
         if (!isRunning()) {
-          notificationService.showInfo('GitHub Auto Cloner', `Running scheduled clone: ${job.label}`);
+          notificationService.showInfo('Git Batch Cloner', `Running scheduled clone: ${job.label}`);
           if (sendToRenderer) sendToRenderer({ type: 'scheduler', event: 'scheduledStart', job });
           await runCloneJob((progress) => {
             if (sendToRenderer) sendToRenderer({ type: 'cloneProgress', data: progress });

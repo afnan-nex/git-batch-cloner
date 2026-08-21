@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-08-21
+
+### Changed
+- Rebranded product display name to **Git Batch Cloner**.
+- Set official Windows application publisher name to **AFNAN**.
+- Updated desktop shortcut, tray menu items, installer script, and window titles to Git Batch Cloner.
+
 ## [1.0.0] - 2026-08-16
 
 ### Added
